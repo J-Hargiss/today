@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body class="m-3 bg-light">
+<h1 class="p-5 text-primary">Today Is</h1>
+    <div class="d-flex justify-content-around">
+        <form action="/login" method="post" class="col-4 p-4 mx-auto bg-light text-dark">
+            <h2 class="text-center text-dark">Login</h2>
+            {% with messages = get_flashed_messages(category_filter=['login']) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="error">{{message}}</p> 
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" name="email"  class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password"  class="form-control">
+            </div>
+            <input type="submit" value="Login" class="btn btn-secondary m-2">
+            <p>Don't have an account? <a href="/registration">Register</a></p>
+        </form>
+    </div>
+</body>
+</html>

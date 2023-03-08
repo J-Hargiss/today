@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Today Is</title>
+</head>
+<body class="m-3 bg-secondary bg-opacity-25">
+    <header>
+        <div class="d-flex justify-content-between">
+            <h1 class="text-primary">Today Is</h1>
+            <div>
+                <a class="btn btn-secondary" href="/dashboard">Journal</a>
+                <a class="btn btn-secondary m-2" href="/logout">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="messages">
+        {% with messages = get_flashed_messages(category_filter=['journal']) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="error">{{message}}</p> 
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+    </div>
+    <main class="container justify-content-center mx-auto mt-2">
+        <h2 class="text-center">Edit Entry</h2>
+        <form action="/editJournal/{{journals.id}}" method="post" class="flex-container">
+            <div class="row">
+                <div class="col-4 offset-1">
+                    <div class="form-group mb-3">
+                        <label for="what_happend">What's Happening Today:</label>
+                        <textarea class="form-control" name="what_happend" id="" cols="50" rows="5">{{journals.what_happend}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_symptom">Any New Symptoms:</label>
+                        <textarea class="form-control" name="new_symptom" id="" cols="50" rows="5">{{journals.new_symptom}}</textarea>
+                    </div>
+                </div>
+                <div class="col-4 offset-2">
+                    <div class="form-group">
+                        <label for="tool_used">Which Tool Did You Use?</label><br>
+                        <select name="tool_used">
+                            <option value="{{journals.tool_used}}">{{journals.tool_used | capitalize}}</option>
+                            <option></option>
+                            <option value="meditation">Meditation</option>
+                            <option value="square-breathing">Square Breathing</option>
+                            <option value="dancing">Dancing</option>
+                            <option value="gentle-stretching">Gentle Stretching</option>
+                        </select>
+                    </div>
+                    <p class="form-label">Did Your Tool Feel Effective?</p>
+                    <div class="form-check-inline">
+                        <input type="radio" name="effective" value="1" id="effective_yes" class="form-check-input" {% if journals.effective =="1" %}checked{% endif %}>
+                        <label for="effective_yes" class="form-label">Yes</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" name="effective" value="0" id="effective_no" class="form-check-input" {% if journals.effective =="0" %}checked{% endif %}>
+                        <label for="effective_no" class="form-label">No</label>
+                    </div>
+                    <br>
+            <input type="hidden" name="user_id" value="{{logged_in_user.id}}">
+            <div class="form-group">
+                <input type="submit" class="btn-lg btn-secondary m-2" value="Update">
+            </div>
+        </form>
+        
+        
+    </main>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+</body>
+</html>
