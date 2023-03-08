@@ -1,2 +1,2 @@
-# today_is
+# today
 solo project
